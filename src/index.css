@@ -1,0 +1,162 @@
+@import "tailwindcss";
+@import "@fontsource/instrument-serif/latin-400.css";
+@import "@fontsource/instrument-serif/latin-400-italic.css";
+
+@font-face {
+  font-family: "Geist Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2") format("woff2-variations");
+}
+@font-face {
+  font-family: "Geist Mono Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("../node_modules/@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2") format("woff2-variations");
+}
+
+@theme {
+  --font-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+
+  --color-ink: #0b1517;
+  --color-night: #0f1f21;
+  --color-pine: #173b37;
+  --color-moss: #2f5a52;
+  --color-mint: #a8e6cf;
+  --color-paper: #f6f0e5;
+  --color-bone: #ece3d2;
+  --color-cream: #fbf8f1;
+  --color-dawn: #ee8a5e;
+  --color-sun: #f5b66b;
+  --color-rose: #e0675a;
+
+  --animate-rise: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-pop: pop 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  --animate-drift: drift 40s linear infinite;
+  --animate-marquee: marquee 70s linear infinite;
+  --animate-pulse-ring: pulse-ring 2.4s ease-out infinite;
+  --animate-twinkle: twinkle 4s ease-in-out infinite;
+  --animate-blink: blink 1.2s steps(2, start) infinite;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: translateY(18px) scale(0.94); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 0.6; }
+    100% { transform: scale(2.2); opacity: 0; }
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 1; }
+  }
+  @keyframes blink {
+    to { opacity: 0.2; }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #0b1517;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-dawn);
+  color: var(--color-ink);
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--d, 0ms);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+.display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.9;
+  border-radius: 2px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-dawn);
+  border: 4px solid var(--color-cream);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  cursor: grab;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-dawn);
+  border: 4px solid var(--color-cream);
+  cursor: grab;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { transition: none; opacity: 1; transform: none; }
+}
